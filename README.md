@@ -24,7 +24,7 @@ C) Supplementary raw tables:
 % (size 933Mb, gene_id listed in file20500_list.txt), on tex@instance-4:~/R/HNSCC_Tex_survival/hnscc_github/marginS
 
 % -rw-r--r--  1 tex tex       845 Mar  8  2020 candidates_20genes.txt
-%"HNSCC.survival.marginS.candidate20.tar.gz"
+% -rw-r--r-- 1 tex tex 1416941 Sep 19 08:18 HNSCC.survival.marginS.candidate20.tar.gz
 % file name listed of candidate 20 gene in supplementary .xlsx)
 
 %==
