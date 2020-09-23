@@ -23,11 +23,12 @@ pvalueTex_R_lite.tar.gz, including
 ```R
 intermediate_data:
  Sep  8  2019 HNSCC.survival.marginS.20500.tar.gz		# resulting survival tables, size 933Mb 
- Sep  8  2019 file20500_list.txt				# gene ID and filename list of above
- Mar  8  2020 HNSCC_OS_marginS_6429.csv			# resulting survival tables, with FDR correction
- Sep 19 2020 08:18 HNSCC.survival.marginS.candidate20.tar.gz	# survival tables of 20 candidate genes (.xlsx)
- Mar  8  2020 candidates_20genes.txt				# gene ID list of candidates
- ```
+ Sep  8  2019 file20500_list.txt     				# gene ID and filename list of above
+ Mar  8  2020 HNSCC_OS_marginS_6429.csv   			# resulting survival tables, with FDR correction
+ Sep 19 2020 08:18 HNSCC.survival.marginS.candidate20.tar.gz  # survival tables of 20 candidate genes (.xlsx)
+ Mar  8  2020 HNSCC_OS_marginS_10bad_candidates.csv		# gene ID list of "bad" candidates
+ Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
+```
 
 ## Next version
 The implementation by Rstudio shiny App, supporting all TCGA diseases, with custom features
