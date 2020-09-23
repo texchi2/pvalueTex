@@ -14,18 +14,18 @@ pvalueTex_R_lite.tar.gz, including
 
 ## B) Rda repository
 ```R
- Sep  8  2020 15:01 HNSCC.clinical.Fire.Rda			# HNSCC clinical dataset from TCGA
- Aug 14  2019 HNSCC.clinical.RNAseq_tobacco.Fire.Rda		# HNSCC RNA-Seq combining clinical dataset (with tobacco exposure)
- Aug 14  2019 whole_genome.Rda						# "gene ID" of 20500 protein coding genes
+ Sep  8  2020 15:01 HNSCC.clinical.Fire.Rda		# HNSCC clinical dataset from TCGA
+ Aug 14  2019 HNSCC.clinical.RNAseq_tobacco.Fire.Rda	# HNSCC RNA-Seq combining clinical dataset (with tobacco exposure)
+ Aug 14  2019 whole_genome.Rda				# "gene ID" of 20500 protein coding genes
 ```
 
 ## C) Supplementary raw tables:
 ```R
 intermediate_data:
- Sep  8  2019 HNSCC.survival.marginS.20500.tar.gz 	# resulting survival tables, size 933Mb 
- Sep  8  2019 file20500_list.txt)					# gene ID and filename list of above
+ Sep  8  2019 HNSCC.survival.marginS.20500.tar.gz	# resulting survival tables, size 933Mb 
+ Sep  8  2019 file20500_list.txt				# gene ID and filename list of above
  HNSCC_OS_marginS_candidates_Bonferroni.xlsx		# resulting survival tables, filtered Bonferroni correction
- Mar  8  2020 candidates_20genes.txt				# gene ID list of candidates
+ Mar  8  2020 candidates_20genes.txt			# gene ID list of candidates
  Sep 19 2020 08:18 HNSCC.survival.marginS.candidate20.tar.gz	# survival tables of candidate genes (.xlsx)
 ```
 
