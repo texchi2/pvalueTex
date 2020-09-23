@@ -1,5 +1,5 @@
 # pvalueTex
-Supplementary Material of manuscript of "A Global Genome-wide Scan with Optimal Cutoff Mining for Emerging Biomarkers in Head and Neck Squamous Cell Carcinoma"
+Supplementary Material of manuscript, title: "A Global Genome-wide Scan with Optimal Cutoff Mining for Emerging Biomarkers in Head and Neck Squamous Cell Carcinoma"
 
 ## A) R script: main and Cutoff Finding engine
 ```R
