@@ -15,7 +15,7 @@ pvalueTex_R_lite.tar.gz, including
 ## B) Rda repository
 ```R
  Sep  8  2020 15:01 HNSCC.clinical.Fire.Rda			# HNSCC clinical dataset from TCGA
- Aug 14  2019 HNSCC.clinical.RNAseq.Fire.Rda		# HNSCC RNA-Seq combining clinical dataset
+ Aug 14  2019 HNSCC.clinical.RNAseq_tobacco.Fire.Rda		# HNSCC RNA-Seq combining clinical dataset (with tobacco exposure)
  Aug 14  2019 whole_genome.Rda						# "gene ID" of 20500 protein coding genes
 ```
 
