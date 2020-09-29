@@ -30,6 +30,8 @@ intermediate_data:
  Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
 ```
 
-## Next version
+## Next on version 1.0.0
 The implementation by Rstudio shiny App, supporting all TCGA diseases, with custom features
+
+We use Semantic Versioning to identify each release. (https://semver.org)
 
