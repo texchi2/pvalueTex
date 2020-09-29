@@ -37,3 +37,4 @@ The implementation by Rstudio shiny App, supporting all TCGA diseases, with cust
 
 We use Semantic Versioning to identify each release. (https://semver.org)
 
+## GPL-3.0-or-later
