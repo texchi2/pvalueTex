@@ -33,8 +33,9 @@ intermediate_data:
 ```
 
 ## Next on version 1.0.0
-The implementation by Rstudio shiny App, supporting all TCGA diseases, with custom features
+The implementation by Rstudio shiny App, supporting all TCGA diseases, with custom feature.
 
 We use Semantic Versioning to identify each release. (https://semver.org)
 
 ## GPL-3.0-or-later
+The content of this material is licensed under the GNU General Public License v3.0 or later.
