@@ -30,6 +30,7 @@ intermediate_data:
  Sep 19 2020 08:18 HNSCC.survival.marginS.candidate20.tar.gz  # survival tables of 20 candidate genes (.xlsx)
  Mar  8  2020 HNSCC_OS_marginS_10bad_candidates.csv		# gene ID list of "bad" candidates
  Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
+ Oct  7  CI_genes.Rda            candidate gene set belongs to the immune system process and immune response
 ```
 
 ## Next on version 1.0.0
