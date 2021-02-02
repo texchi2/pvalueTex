@@ -21,8 +21,10 @@ pvalueTex_R_lite.tar.gz, including
  Aug 14  2019 whole_genome.Rda				# "gene ID" of 20500 protein coding genes
 ```
 
-## C) Supplementary raw tables:
+## C) Supplementary Figures and unpulished raw tables:
 ```R
+Supplementary Figures
+ Oct  7  2020 cancers-1082127_supplementaryFigure123.pdf
 intermediate_data:
  Sep  8  2019 HNSCC.survival.marginS.20500.tar.gz		# resulting survival tables of each gene (.Rda + .xlsx), size 933Mb 
  Sep  8  2019 file20500_list.txt     				# gene ID and filename list of HNSCC.survival.marginS.20500.tar.gz
@@ -30,7 +32,7 @@ intermediate_data:
  Sep 19 2020 08:18 HNSCC.survival.marginS.candidate20.tar.gz  # survival tables of 20 candidate genes (.xlsx)
  Mar  8  2020 HNSCC_OS_marginS_10bad_candidates.csv		# gene ID list of "bad" candidates
  Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
- Oct  7  CI_genes.Rda            candidate gene set belongs to the immune system process and immune response
+ Oct  7  2020 CI_genes.Rda            candidate gene set belongs to the immune system process and immune response
 ```
 
 ## Next on version 1.0.0
