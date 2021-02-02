@@ -23,9 +23,8 @@ pvalueTex_R_lite.tar.gz, including
 
 ## C) Supplementary Figures and unpulished raw tables:
 ```R
-Supplementary Figures
- Oct  7  2020 cancers-1082127_supplementaryFigure123.pdf
-intermediate_data:
+
+Intermediate_data:
  Sep  8  2019 HNSCC.survival.marginS.20500.tar.gz		# resulting survival tables of each gene (.Rda + .xlsx), size 933Mb 
  Sep  8  2019 file20500_list.txt     				# gene ID and filename list of HNSCC.survival.marginS.20500.tar.gz
  Mar  8  2020 HNSCC_OS_marginS_6429.csv   			# survival tables of 6429 genes (uncorrected P-value < 0.05), with FDR correction
@@ -33,6 +32,8 @@ intermediate_data:
  Mar  8  2020 HNSCC_OS_marginS_10bad_candidates.csv		# gene ID list of "bad" candidates
  Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
  Oct  7  2020 CI_genes.Rda            candidate gene set belongs to the immune system process and immune response
+ Supplementary Figures
+ Feb  2  2021 cancers-1082127_supplementaryFigure123.pdf
 ```
 
 ## Next on version 1.0.0
