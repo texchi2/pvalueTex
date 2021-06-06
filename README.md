@@ -32,7 +32,7 @@ Intermediate_data:
  Mar  8  2020 HNSCC_OS_marginS_10bad_candidates.csv		# gene ID list of "bad" candidates
  Mar  8  2020 HNSCC_OS_marginS_10good_candidates.csv		# gene ID list of "good" candidates
  Oct  7  2020 CI_genes.Rda            candidate gene set belongs to the immune system process and immune response
- Jun  6  2021 HNSCC.mRNA.Exp.SLC35E2.Fire.Rda     nRNA data of SLC35E2 (containing SLC35E2A and SLC35E2B)
+ Jun  6  2021 HNSCC.mRNA.Exp.SLC35E2.Fire.Rda     mRNA data of SLC35E2 (containing SLC35E2A and SLC35E2B)
  
 Supplementary Figures:
  Feb  2  2021 cancers-1082127_supplementaryFigure123.pdf
