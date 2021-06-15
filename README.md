@@ -10,6 +10,7 @@ pvalueTex_R_lite.tar.gz, including
  Sep  8 2020 10:45 TCGA_HNSCC_marginSFP.R		# step 1
  May 20 2020 10:55 cutofFinder_func_HNSCC.R		# cutoff finding procedure
  Sep  8 2020 10:58 analysis_export.R.			# step 2
+ Jun 15 2021 22:00 Validation_GSE65858_survival.R  # final validation
 ```
 (current version at manuscript submitted on 2020/09/19)
 (Sep 19 2020 02:59 volcano_plot.R)
