@@ -180,7 +180,7 @@ save(gset_OS_mRNA2, file="gset_OS_mRNA2.Rda")
 
 # from pvalueTex
 # > fit KM survival curves ####
-# cancer type shouble be defined at TCGA_cohort <- "LUAD" "HNSC"
+# cancer type should be defined at TCGA_cohort <- "LUAD" "HNSC"
 # OS time (days), OS event
 colnames(gset_OS_mRNA2)[c(5,6)] <- c("OS_time", "OS_event")
 
@@ -494,10 +494,12 @@ osHR <- round(osHR, 3)
 osHR$`Cox.P-value`[osHR$`Cox.P-value` < 0.001] <- "***"
 
 View(osHR) #-> (univariate) table 3 left panel
-save(osHR, file="fdr7614_Cox_HR_GSE65858.Rda") # HR
-save(osHR, file="HNSCC_OS_GSE65858_pvalueCox_HR.Rda") # uni_HR
 
-# HNSCC_OS_marginS_pvalue005KM_sorted_pvalueCox_HR
+# where is this .Rda??
+save(osHR, file="fdr7614_Cox_HR_GSE65858.Rda") # HR; as osHR
+save(osHR, file="HNSCC_OS_GSE65858_pvalueCox_HR.Rda") # with Cox's uni_HR; still as osHR
+
+# HNSCC_OS_marginS_pvalue005KM_sorted_pvalueCox_HR from pvalueTex
 # HNSCC_OS_GSE65858_pvalueCox_HR as osHR in 7614 probes of RNA-Seq
 
 
@@ -507,9 +509,9 @@ save(osHR, file="HNSCC_OS_GSE65858_pvalueCox_HR.Rda") # uni_HR
 
 #> ggplot(Cox uni_HR of GSE65858) ####
 # GSE65858 Cox, uni_HR
-load(file="HNSCC_OS_GSE65858_pvalueCox_HR.Rda") # uni_HR => osHR
+load(file="HNSCC_OS_GSE65858_pvalueCox_HR.Rda") # as osHR$uni_HR, ... etc.
 hazard0 <- subset(osHR, select=c(Gene.Symbol, uni_HR)) # Cox.P-value 
-
+load(file="fdr7614_KMsurvival_GSE65858.Rda") # as fdr100_KMsurvival, from from pvalueTex
 # go
 # FDR Pvalue (TCGA pvalueTex), KM Pvalue/Cox uni_HR (GSE65858)
 hazards <- merge(fdr100_KMsurvival, hazard0, by = "Gene.Symbol")
@@ -524,7 +526,8 @@ hazards <- hazards[!duplicated(hazards), ]
 hazards$log10P <- -log10(as.numeric(hazards$KM.Pvalue)) # positive (for spot size)
 hazards$plog10P <- log10(as.numeric(hazards$KM.Pvalue)) # becoming negative (for X-axis)
 
-gene_labeled_golden <- c("CAMK2N1", "IL19", "FCGBP")
+gene_labeled_golden <- c("CAMK2N1", "CALML5", "IL19", 
+                         "FCGBP")
 
 # from pvalueTex without gene_labeled_golden
 gene_labeled <- c(
@@ -538,7 +541,7 @@ gene_labeled <- c(
 #"NPB",
 
 #    "ATP13A4",    
-#"PLAU",      
+"PLAU",      # it is in Bayes Cox-Lasso
 #"ZNF662",     
 #"POMP",       
 #"DOT1L",     
@@ -662,9 +665,11 @@ ggplot(hazards, aes(y = uni_HR, x = plog10P)) +   # x = plog10P  #Creation of gg
 # thanks https://ggrepel.slowkow.com/articles/examples.html
 ###
 
-# *** hazards534 GSE65858 Cox HR (uni_HR) ####
+# *** GSE65858 Cox HR (uni_HR) ####
 # KM FDR-ajdusted P value: hazards534
+load(file="HNSCC_GSE65858_FDRKMpvalue_7614probes.Rda") # hazards
 hazards534 <- hazards[hazards$FDR.KMpvalue < 0.05, ]
+
 
 ggplot(hazards534, aes(y = uni_HR, x = plog10P)) +   # x = plog10P  #Creation of ggplot graph with pre-determined aesthetics
   geom_point(shape = 21, alpha = 0.8, aes(size = log10P, fill = uni_HR)) + 
@@ -727,7 +732,8 @@ ggplot(hazards534, aes(y = uni_HR, x = plog10P)) +   # x = plog10P  #Creation of
         axis.title=element_text(size=18))
 
 ###
-
+# [2021/07/02] updated
+save(hazards534, file="GSE65858_HNSCC_CoxHR_FDRKM.Rda")
 ggsave("Rplot_GSE65858_CoxHR_CAMK2N1_top3FDRKM.pdf") #, width = 12, height = 8, dpi = 84)
 # legands on Our findings suggested 20 candidate biomarkers, 
 
@@ -742,7 +748,9 @@ ggsave("Rplot_GSE65858_CoxHR_CAMK2N1_top3FDRKM.pdf") #, width = 12, height = 8, 
 
 
 # [2021/06/13]
-#> Top3 CAMK2N1/IL19/FCGBP in TCGA #### 
+#> Top3 CAMK2N1/IL19/FCGBP in TCGA ### 
+# updated [2020/07/02]
+# top3 CAMK2N1/CALML5/FCGBP in TCGA ####
 #MSMB (22 genes/32 probes) in TCGA HNSCC (pvalueTex) ###
 # all of them have TCGA FDR Pvalue just < 0.05 
 # (MSMB > 0.03)(LYPD2 P = 0.000669 = log10 as 3.18)
@@ -787,11 +795,11 @@ hazards$plog10P <- log10(as.numeric(hazards$FDR.Pvalue)) # becoming negative (fo
 hazards <- hazards[!duplicated(hazards$Gene.Symbol), ]
 
 # to see how gene_labeled distributed in TCGA HNSCC world
-gene_labeled_golden <- c("CAMK2N1", "IL19", "FCGBP")
+gene_labeled_golden <- c("CAMK2N1", "CALML5", "FCGBP")
 gene_labeled_silver <- c(
   "DKK1", #CAMK2N1, 
   "STC2", "PGK1", "SURF4", "USP10", "NDFIP1", "FOXA2", "STIP1", "DKC1", 
-  "ZNF557", "ZNF266", #IL19, 
+  "ZNF557", "ZNF266", "IL19", 
   "MYO1H", #FCGBP, 
   "LOC148709", "EVPLL", "PNMA5", "KIAA1683", "NPB"
 )
@@ -842,17 +850,22 @@ gene_labeled <- c(
   "TRAPPC10",
   "TTYH3" ,   "XYLT1" 
 )
-# 
-# 
-# # going for volcano plot by ggplot() ####
+
+# **** or cv.mod.candidate from Cox-Lasso regression
+# 16 genes
+load(file="RLassoCox_TCGA_candidate62.Rda")
+gene_labeled <- cv.mod.candidate$Gene.symbol
+#
+# *** TCGA HNSCC going for volcano plot by ggplot() ####
 library(ggplot2)
 library(ggrepel) # function "geom_label_repel"
+cut_pvalue <- 0.05
 ggplot(hazards, aes(y = multi_HR, x = plog10P)) +   # x = plog10P  #Creation of ggplot graph with pre-determined aesthetics
   geom_point(shape = 21, alpha = 0.8, aes(size = log10P, fill = multi_HR)) + 
   scale_fill_distiller(palette = "RdYlGn", trans="log", limits = c(min(hazards$multi_HR), max(hazards$multi_HR))) + # min(hazards$uni_HR)
   #Diverging  BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral
   geom_vline(xintercept = log10(cut_pvalue), color="red", lty=2) + 
-  geom_hline(yintercept = 0.5, lty = 2) +
+  geom_hline(yintercept = 0.6, lty = 2) +
   geom_hline(yintercept = 1.8, lty = 2) +
   guides(size=FALSE, fill=FALSE) + 
   guides(size=FALSE, fill=FALSE) + 
@@ -884,10 +897,7 @@ ggplot(hazards, aes(y = multi_HR, x = plog10P)) +   # x = plog10P  #Creation of 
     direction     = "both", #xy
     hjust         = 0,
     force_pull = 2 # pull label to it's data point
-  ) +
-  
-###
-### ggplot() for gene_labeled_silver
+  ) +   ### ggplot() for gene_labeled_silver
   # hazards
   geom_label_repel(
     data=subset(hazards, Gene.Symbol %in% gene_labeled_silver),
@@ -907,6 +917,7 @@ ggplot(hazards, aes(y = multi_HR, x = plog10P)) +   # x = plog10P  #Creation of 
   ) +
 
   # gene_labeled (other than CAMK2N1)
+  # 
   # hazards
   geom_text_repel(data=subset(hazards, Gene.Symbol %in% gene_labeled),
                   aes(label=Gene.Symbol),
@@ -934,7 +945,7 @@ ggsave("Rplot_TCGA_HNSCC_CoxHR_CAMK2N1_top3FDRKM.pdf") #, width = 12, height = 8
 
 
 
-# [2021/06/15] Japan's AstraZeca vaccine
+# [2021/06/15] Japan's AstraZeneca vaccine
 # candidate_sample
 hazard999 <- candidate_sample[complete.cases(candidate_sample),]
 hazard999$fdr_KMPvalue <- p.adjust(hazard999$p_value, method="fdr")
@@ -1057,6 +1068,246 @@ OS_pvalueTex_NDFIP1 <- OS_pvalueTex002[OS_pvalueTex002$Gene.symbol=="NDFIP1",]
 plot(OS_pvalueTex_NDFIP1$cases_OS, OS_pvalueTex_NDFIP1$p_OS)
 # => supplementary figure as Rplot_pvaluePlot_NDFIP1.pdf
 ###
+
+
+# CALML5 as new candidate ####
+# [2021/07/02]
+save(consensus_9, top_TCGA, top_gse65858, file="consensus_CAMK2N1_CALML5_FCGBP.Rda")
+
+
+#[2021/06/27]
+# ***TCGA median cut KM plot ####
+# how many genes with P value < 0.05?
+# from pvalueTex
+# > fit KM survival curves ####
+# cancer type should be defined at TCGA_cohort <- "LUAD" "HNSC"
+#x GEO dataset: GSE65858, dim 256 * 7620
+#x load(file="gset_OS_mRNA2.Rda") # as gset_OS_mRNA2
+#
+# load TCGA HNSCC dataset
+# xload(file="HNSCC.clinical.RNAseq_tobacco.Fire.Rda") #clinical data only
+load(file="HNSCC.clinical.RNAseq.Fire.Rda") # 20500 RNA-Seq dataset
+#oscc <- clean6_oscc_tobacco
+#oscc0 <- merge(oscc, clean6_oscc_tobacco, by "")
+
+# "status" "time"  n=521
+survData <- clean6_oscc_tobacco[, c(10,12)] # "Unique.ID","OS_IND" "OS_months"
+colnames(survData) <- c("status", "time")
+survData$status <- ifelse((survData$status==1), TRUE, FALSE)
+rownames(survData) <- clean6_oscc_tobacco[, c(1)] # ID
+
+# Gene.symbol is colname: "z.score_A1BG"...p=20239 genes
+mRNA_matrix <- clean6_oscc_tobacco[, c(16:20254)]
+rownames(mRNA_matrix) <- clean6_oscc_tobacco[, c(1)] # ID
+
+## connecting pvalueTex code to GEO code:####
+# *** merge survData, mRNA_matrix into gset_OS_mRNA2, np521, p=20254
+#df <- as.data.frame(matrix(NaN, ncol = 1, nrow = nrow(gset_OS_mRNA2))) # Don't skip 1st row 
+df <- as.data.frame(row.names(survData))
+colnames(df)[1] <- "Gene.symbol"
+df <- cbind(df, survData, mRNA_matrix)
+# OS time (days), OS event
+colnames(df)[c(3,2)] <- c("OS_time", "OS_event")
+library(stringr) # extract last word
+# # "z.score_" removal by str_replace
+#df$OS_time <- str_extract(gset_OS_mRNA2$OS_time,"\\w+$")
+gsymbol <- str_replace(colnames(df)[4:20242], "z.score_", "")
+colnames(df)[4:20242] <- gsymbol
+#df$OS_event <- str_extract(gset_OS_mRNA2$OS_event,"\\w+$") #first word
+# if # extract first word: "\\w+" in regular expression
+
+df$OS_time <- as.numeric(df$OS_time) # months
+df$OS_event <- ifelse(df$OS_event == "TRUE", 1, 0) # OS event TRUE as 1 (dead)
+# 1: 88 vs 0:168
+#gset_OS_mRNA2[, c("OS_time", "OS_event")] <- df[, c("OS_time", "OS_event")]
+gset_OS_mRNA2 <- df
+
+# probes number: coln122-coln7+1 =116 (100 genes)
+#library('taRifx')
+#gset_OS_mRNA3 <- remove.factors(gset_OS_mRNA2)
+# unlist or lapply if legnth > 1 to coerce
+#gset_OS_mRNA3[, c(coln7:coln122)] <- lapply(gset_OS_mRNA3[, c(coln7:coln122)], as.numeric)
+#gset_OS_mRNA3 <- as.numeric(gset_OS_mRNA3[, c(coln7:coln122)])
+#gset_OS_mRNA2 <- gset_OS_mRNA3
+save(gset_OS_mRNA2, file="TCGA_KM_gset_OS_mRNA2.Rda") # TCGA pvalueTex [2021/06/27]
+
+# data cleaning####
+load(file="TCGA_KM_gset_OS_mRNA2.Rda")
+# as gset_OS_mRNA2
+#removal missing event status or time-to-event (2 NaN  cases at no 165 416)
+table(complete.cases(gset_OS_mRNA2))
+summary(gset_OS_mRNA2[,1:3])
+which(is.na(gset_OS_mRNA2$OS_time))
+gset_OS_mRNA2 <- gset_OS_mRNA2[complete.cases(gset_OS_mRNA2[,1:3]), ]
+# n=519 now
+# check missing of gene expression
+# (159 missing)
+col_nan <- which(is.na(gset_OS_mRNA2[1,]))
+gset_OS_mRNA2 <- subset(gset_OS_mRNA2, select = -col_nan)
+# 20083= 20242-159
+# dim 519 * 20083 now
+# knockout TCGA-BA-A6DF (at 32)
+gset_OS_mRNA2 <- gset_OS_mRNA2[-32,]
+# # dim 519 * 20083 now
+# still NaN at somewhere (n=225) => check NaN expression over 30% of each gene => skip (during for i loop)
+# If you need NA count Column wise – sapply(z, function(x) sum(is.na 3.6k(x)))
+#
+# x
+# knock-out at 165 416: TCGA-CQ-A4CA, TCGA-H7-A6C4
+#mRNA_matrix[c(165, 416), 1] <- NaN
+# and at 32: TCGA-BA-A6DF
+#survData[c(32), 2] <- NaN
+#survData <- survData[complete.cases(survData$time), ]
+# missing at 32 x (imputation this missing data)
+#mRNA_matrix <- mRNA_matrix[complete.cases(mRNA_matrix$"1"), ]
+
+# run from here => go ####
+# *************
+# removal of all generated pdf
+library(survival)
+# 
+mysurv <- Surv(gset_OS_mRNA2$OS_time, gset_OS_mRNA2$OS_event == 1) #1==dead, time by months
+
+# check MASP1, warnings() on more than one probe to a gene
+#which("MASP1"== colnames(gset_OS_mRNA2))
+# [1] 1503 1580 1928
+#
+# for loop (20242-4+1=20239 genes) save KM pvalues
+fdr100_KMsurvival <- data.frame("Gene Symbol"=NaN, "FDR Pvalue"=NaN, 
+                                "KM Pvalue"=NaN, "cases_High"=NaN, "cases_Low"=NaN)
+# a empty 1 x 5 data.frame
+#i <- 4 # for TCGA
+#coln7
+coln4 <- 4 # exp of gene ZNF589 -> A1BG
+# error at 16114: data set has no non-missing observations
+coln4 <- 16114 +1
+coln4 <- 18326+1 # skip "TRYX3": all are -0.04203
+coln122 <- ncol(gset_OS_mRNA2) # 2298 now for FDR2000; 20242 -> 20083 for TRCGA clean6_oscc_tobacco of pvalueTex
+n_cases <- nrow(gset_OS_mRNA2)
+#
+for (i in c(coln4:coln122)) {
+  # expression cutoff at median value -> grouping by dichomolized it
+  # cutoff <- sapply(gset_OS_mRNA2[, i], median)
+  #  still NaN at somewhere (n=226) => check NaN expression over 30% of each gene => skip
+  if (sum(is.na(gset_OS_mRNA2[, i]))/n_cases < 0.3) {
+  cutoff <- median(gset_OS_mRNA2[, i], na.rm = TRUE)
+  # dichotomize
+  #oscc$ageDx[gset_OS_mRNA2[, i] < cutoff] <- 0 # underexpression
+  #oscc$ageDx[gset_OS_mRNA2[, i] >= cutoff] <- 1 # overexpression than cutoff
+  #
+  # *** one group issue: survdiff.fit
+  # A1CF 13% cases >1, while 87% cases = -0.30949; so median is -0.30949; 
+#  % all cases belong to >= median
+# solved by assign: [, i] > cutoff
+  gset_OS_overexpression <- ifelse((gset_OS_mRNA2[, i] > cutoff), 1, 0)
+  # imputation NaN as "< cutoff" group
+  # *** check "all are the same"
+  if (sum(gset_OS_overexpression) == 0)  {
+    print(paste("[xx ", i, "/", coln122, "] skip due to 'all are the same' of", colnames(gset_OS_mRNA2)[i]))
+    next # skip to next i;
+    # not break 
+  }
+  # Test for difference (log-rank test) between groups (by PMM1_median 0 vs 1)
+  #tryCatch(surv_OS1 <- survdiff(mysurv ~ as.vector(gset_OS_mRNA2[, gset_OS_mRNA2M_pos], mode="numeric"), data=gset_OS_mRNA2), error = function(e) return(NA)) # PMM1 high or low
+  # or OS.km ; as.vector(unlist(gset_OS_mRNA2[, osccCleanNAM_pos]), mode="numeric"), data=gset_OS_mRNA2
+  # survfit(, type= "kaplan-meier", conf.type = "log-log") 
+  # for fit, plot; 
+  surv_OS1 <- survfit(mysurv ~ gset_OS_overexpression, type= "kaplan-meier", conf.type = "log-log") # log-rank test
+  
+  # survdiff for two group with P value
+  # pchisq gives the distribution function
+  surv_OSp <- survdiff(mysurv ~ gset_OS_overexpression) # log-rank test
+  # N Observed Expected (O-E)^2/E (O-E)^2/V
+  # broom::glance(surv_OS1)$p.value
+  p_OS1 <- format(pchisq(surv_OSp$chisq, length(surv_OSp$n)-1, lower.tail = FALSE), digits=3)
+  # (p_OS1 == p_OS0) is TRUE
+  #cases_OS1 <- surv_OSp$n[1]
+  # #Value of survdiff => a list with components: help("survdiff")
+  # n => the number of subjects in each group.
+  # obs
+  # the weighted observed number of events in each group. If there are strata, this will be a matrix with one column per stratum.
+  # exp
+  # the weighted expected number of events in each group. If there are strata, this will be a matrix with one column per stratum.
+  # chisq
+  # the chisquare statistic for a test of equality.
+  # var
+  # the variance matrix of the test.
+  # strata
+  # optionally, the number of subjects contained in each stratum.
+  
+  # [survfit] - Kaplan-Meier curve: P-Value ####
+  # confidence intervals as log hazard or log(-log(survival))
+  #OS.km <- survfit(mysurv ~ as.vector(unlist(gset_OS_mRNA2[, gset_OS_mRNA2M_pos]), mode="numeric"), data=gset_OS_mRNA2, type= "kaplan-meier", conf.type = "log-log")
+  # 365.25 days in a year for xscale => 3650 days for 10 years
+  # maximal followup to 6.8 years => 2483.7 days
+  # 12 months per year for 5 years => 60 months, 1826.25 days
+  # xscale=12, xmax=60
+  
+  pdf_fn <- paste("rplot_TCGA_", colnames(gset_OS_mRNA2)[i], ".pdf", sep="")
+  if (file.exists(pdf_fn)) {
+    pdf_fn <- 
+      paste("rplot_TCGA_", colnames(gset_OS_mRNA2)[i], "_", i, ".pdf", sep="")
+  }
+  pdf(pdf_fn) # gene symbol
+  # save PDF, size 746 x 431 pixel(?)
+  # xmax by months; if xscale by days 365.25
+  plot(surv_OS1, lty=1, xscale=12, xmax=200, col=c("blue","red"), 
+       sub=paste("Kaplan-Meier P Value =", p_OS1), 
+       main=paste("OS in TCGA", TCGA_cohort, "(n=", surv_OS1$n[1]+surv_OS1$n[2],")/", colnames(gset_OS_mRNA2)[i]), ylab="Percent Survival", xlab="Years")
+  legend("topright", legend=c(paste("low(",surv_OS1$n[1], ")"), paste("high(",surv_OS1$n[2], ")")), lty=1:1, col=c("blue","red"))
+  dev.off()
+  #plot(OS.km, lty=1, col=c("blue","red"), sub="p= 0.816", main="OS in gset_OS_mRNA2(n=505)/gene level", ylab="Percent Survival", xlab="Days")
+  #legend("topright", legend=c('Low', 'High'), lty=1:2, col=c("blue","red"))
+  # summary(OS.km, times = seq(0, 3000, 100))
+  # 
+  # save/store P value
+  # [1] "Gene.Symbol" "FDR.Pvalue"  "KM.Pvalue"   "cases_High"  "cases_Low" 
+  fdrpvalue <- 2 # false value (we calculate FDR p value after for loop i) #fdrpvalue <- candidate_fdr100$p_value[which(candidate_fdr100$Gene.symbol==colnames(gset_OS_mRNA2)[i])]
+#  if (length(fdrpvalue) > 1) {fdrpvalue <- fdrpvalue[1]} # prevent duplicated genes (FDR Pvalue)
+  fdr100_KMsurvival[i-which(colnames(gset_OS_mRNA2) == "OS_event"), ] <- 
+    c(colnames(gset_OS_mRNA2)[i], 
+      fdrpvalue, 
+      p_OS1, surv_OS1$n[2], surv_OS1$n[1])
+  print(paste("[", i, "/", coln122, "] Generating median-cut KM plot of", colnames(gset_OS_mRNA2)[i]))
+  
+  #"(", which(whole_genome==geneName), ")"))
+} # end of if 30% NaN
+} # end of for loop
+
+View(fdr100_KMsurvival)
+# p=20080
+# removal of 1st NaN row
+fdr100_KMsurvival <- fdr100_KMsurvival[-1,]
+# 3117 genes has unadjusted KM pvalue < 0.05
+# FDR calculation
+fdr100_KMsurvival$FDR.Pvalue <- p.adjust(fdr100_KMsurvival$KM.Pvalue, method = "fdr")
+# or
+fdr100_KMsurvival$FDR.Pvalue <- p.adjust(fdr100_KMsurvival$KM.Pvalue[fdr100_KMsurvival$KM.Pvalue < 0.05], method = "fdr")
+# 12/100 or 152/2000 discovery rate by GSE65858
+# 530/7614
+plot(fdr100_KMsurvival$FDR.Pvalue[fdr100_KMsurvival$KM.Pvalue < 0.05], fdr100_KMsurvival$KM.Pvalue[fdr100_KMsurvival$KM.Pvalue < 0.05], log = "y", xlab="KM FDR P value", ylab="KM unadjusted P value", main="TCGA HNSCC Kaplan-Meier estimate with cutoff at median expression")
+abline(h=0.05)
+abline(v=0.05)
+
+save(fdr100_KMsurvival, file="TCGA_HNSCC_KMsurvival_medianCut20080.Rda")
+# 3118 genes
+View(fdr100_KMsurvival[fdr100_KMsurvival$KM.Pvalue<0.05 ,])
+# 209 genes
+View(fdr100_KMsurvival[fdr100_KMsurvival$FDR.Pvalue<0.05 ,])
+
+# ****** IL19 必須要靠 pvalueTex 才能發現
+> gene_labeled_golden[!gene_labeled_golden %in% fdr100_KMsurvival$Gene.Symbol[fdr100_KMsurvival$FDR.Pvalue<0.05]]
+#[1] "IL19"; median cut at 258 vs 260
+# KM pvalue = 0.0038
+# FDR Pvalue = 0.1154315
+# when [optimal cutoff] by pvalueTex
+# KM pvalue = 3.73e-7
+# FDR Pvalue = 6.54e-6
+# % scp  tex@35.201.169.0:~/R/HNSCC_Tex_survival/hnscc_github/rplot_GSE65858.tar.gz ./Downloads
+# end of major revision and answer (1-1 to 2-6)
+
+
+
 
 ### (spared code) ####
 ###### Download platform data from GEO and get sample (phenotype) information ## 
