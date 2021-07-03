@@ -8,12 +8,14 @@ Supplementary Material of manuscript, title: "A Global Genome-wide Scan with Opt
 pvalueTex_R_lite.tar.gz, including
  Sep  8 2020 15:03 main_marginSFP_HNSCC.R		# main code
  Sep  8 2020 10:45 TCGA_HNSCC_marginSFP.R		# step 1
- May 20 2020 10:55 cutofFinder_func_HNSCC.R		# cutoff finding procedure
- Sep  8 2020 10:58 analysis_export.R.			# step 2
- Jun 15 2021 22:00 Validation_GSE65858_survival.R  # final validation
+ May 20 2020 10:55 cutofFinder_func_HNSCC.R		# cutoff finding procedure (FDR)
+ Jul  3 2021 10:58 analysis_export.R.			# step 2 (Bonferroni)
+ Sep 19 2020 02:59 volcano_plot.R
+ Jul  2 2021 22:00 Validation_GSE65858_survival.R  # final validation
+ Jun 26 2021 20:45 Bayes_survival.R  # LASSO regression with Cox (RLassoCox)
 ```
-(current version at manuscript submitted on 2020/09/19)
-(Sep 19 2020 02:59 volcano_plot.R)
+(first version at manuscript submitted on 2020/09/19)
+(final version at manuscript submitted on 2021/07/04) JPM
 
 ## B) Rda repository
 ```R
