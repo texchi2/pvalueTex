@@ -28,7 +28,15 @@ pvalueTex_R_lite.tar.gz, including
  Aug 14  2019 whole_genome.Rda				# "gene ID" of 20500 protein coding genes
 ```
 
-## C) Supplementary Figures and unpulished raw tables:
+## C) Article and Keynote of the Video Abstract:
+```R
+Aug 11 2021 jpm-11-00782-v2.pdf # publised article, https://www.mdpi.com/2075-4426/11/8/782
+Aug 15 2021 KOMA_Script_MDPI_jpm_1309345_Keynote_VideoAbstract.pdf # keynote for Video abstract
+
+```
+
+
+## D) Supplementary Figures and unpulished raw tables:
 ```R
 
 Intermediate_data:
