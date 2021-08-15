@@ -32,6 +32,7 @@ pvalueTex_R_lite.tar.gz, including
 ```R
 Aug 11 2021 jpm-11-00782-v2.pdf # publised article, https://www.mdpi.com/2075-4426/11/8/782
 Aug 15 2021 KOMA_Script_MDPI_jpm_1309345_Keynote_VideoAbstract.pdf # keynote for Video abstract
+Video is also available at YouTube: https://youtu.be/VK5F43fusDA
 
 ```
 
